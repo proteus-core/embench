@@ -22,7 +22,7 @@ import re
 import pathlib
 
 from embench_core import log
-
+from embench_core import gp
 
 def get_target_args(remnant):
     """Parse left over arguments"""
@@ -71,7 +71,7 @@ def run_benchmark(bench, path, args):
             ['sh', '-c', sh + ' ' + path + '; echo RET=$?'],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            timeout=50,
+            timeout=gp['timeout']
         )
     except subprocess.TimeoutExpired:
         log.warning(f'Warning: Run of {bench} timed out.')
