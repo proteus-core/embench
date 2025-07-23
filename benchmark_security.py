@@ -30,10 +30,9 @@ from embench_core import output_format
 
 def main():
     # TODO: See benchmark_speed.py and benchmark_size.py for template
-
+    pass
 
 # Make sure we have new enough Python and only run if this is the main package
-
 check_python_version(3, 6)
 if __name__ == '__main__':
     sys.exit(main())
