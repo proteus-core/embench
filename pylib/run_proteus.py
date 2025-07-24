@@ -45,7 +45,7 @@ def decode_results(stdout_str, stderr_str):
         return None
 
     # Match "Clock cycles: d"
-    time = re.search(r'^Clock cycles: (\d+)', stdout_str, re.S)
+    time = re.search(r'^Clock cycles: (\d+)', stdout_str, re.S | re.M)
     if time:
         cycles_elapsed = float(time.group(1))
         ms_elapsed = cycles_elapsed * (30 * 10e-6); # Critical path of 30 ns
@@ -53,7 +53,6 @@ def decode_results(stdout_str, stderr_str):
         return max(float(ms_elapsed), 0.001)
 
     # We must have failed to find a time
-    print(stdout_str, stderr_str)
     log.debug('Warning: Failed to find timing')
     return None
 
