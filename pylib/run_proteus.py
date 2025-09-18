@@ -38,6 +38,8 @@ def decode_results(stdout_str, stderr_str):
     # execution time. Return code is in standard output. Execution time is in
     # standard error.
 
+    print(stdout_str)
+    print(stderr_str)
     # Match "RET=rc"
     rcstr = re.search(r'^RET=(\d+)', stdout_str, re.S | re.M)
     if not rcstr:
@@ -48,7 +50,9 @@ def decode_results(stdout_str, stderr_str):
     time = re.search(r'^Clock cycles: (\d+)', stdout_str, re.S | re.M)
     if time:
         cycles_elapsed = float(time.group(1))
-        ms_elapsed = cycles_elapsed * (30 * 10e-6); # Critical path of 30 ns
+        print(f"cycles: {cycles_elapsed}")
+        # ms_elapsed = cycles_elapsed * (30 * 10e-6); # Critical path of 30 ns
+        ms_elapsed = cycles_elapsed * 30; # Critical path of 30 ns
         # Return value cannot be zero (will be interpreted as error)
         return max(float(ms_elapsed), 0.001)
 

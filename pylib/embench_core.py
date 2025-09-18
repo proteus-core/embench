@@ -25,6 +25,7 @@ import re
 import sys
 import time
 from enum import Enum
+from pathlib import Path
 
 
 # What we export
@@ -124,14 +125,14 @@ def log_args(args):
     log.debug('')
 
 
-def find_benchmarks():
+def find_benchmarks(benchdir):
     """Enumerate all the benchmarks in alphabetical order.  The benchmarks are
        found in the 'src' subdirectory of the root directory.  Set up global
        parameters for the source and build benchmark directories.
 
        Return the list of benchmarks."""
-    gp['benchdir'] = os.path.join(gp['rootdir'], 'src')
-    gp['bd_benchdir'] = os.path.join(gp['bd'], 'src')
+    gp['benchdir'] = benchdir
+    gp['bd_benchdir'] = os.path.join(gp['bd'], Path(benchdir).name)
     dirlist = os.listdir(gp['benchdir'])
 
     benchmarks = []

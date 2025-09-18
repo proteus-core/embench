@@ -12,6 +12,7 @@
    SPDX-License-Identifier: GPL-3.0-or-later */
 
 #include "support.h"
+#include <stdlib.h>
 
 
 int __attribute__ ((used))
@@ -34,7 +35,8 @@ main (int argc __attribute__ ((unused)),
 
   correct = verify_benchmark (result);
 
-  return (!correct);
+  // return (!correct);
+  exit(!correct);
 
 }				/* main () */
 

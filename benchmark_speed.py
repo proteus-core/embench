@@ -47,6 +47,12 @@ def get_common_args():
     parser = argparse.ArgumentParser(description='Compute the size benchmark')
 
     parser.add_argument(
+        '--benchdir',
+        type=str,
+        default='src',
+        help='Directory holding all benchmarks',
+    )
+    parser.add_argument(
         '--builddir',
         type=str,
         default='bd',
@@ -206,7 +212,9 @@ def benchmark_speed(bench, args):
 
     res = None
     if os.path.isfile(appexe):
+        print(appexe)
         res = run_benchmark(bench, appexe, args)
+        print(res)
         if res is None:
             log.warning(f'Warning: Run of {bench} failed.')
     else:
@@ -529,7 +537,7 @@ def main():
     args = argparse.Namespace(**vars(args), **vars(get_target_args(remnant)))
 
     # Find the benchmarks
-    benchmarks = find_benchmarks()
+    benchmarks = find_benchmarks(args.benchdir)
     log_benchmarks(benchmarks)
 
     # Collect the speed data for the benchmarks.
