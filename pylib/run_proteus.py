@@ -71,7 +71,7 @@ def run_benchmark(bench, path, args):
     sh = '%s/run_proteus.sh' % pathlib.Path(__file__).resolve().parent
     try:
         res = subprocess.run(
-            ['sh', '-c', sh + ' ' + path + '; echo RET=$?'],
+            ['sh', '-c', sh + ' ' + path],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             timeout=gp['timeout']

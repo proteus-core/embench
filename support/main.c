@@ -13,7 +13,7 @@
 
 #include "support.h"
 #include <stdlib.h>
-
+#include <stdio.h>
 
 int __attribute__ ((used))
 main (int argc __attribute__ ((unused)),
@@ -35,9 +35,8 @@ main (int argc __attribute__ ((unused)),
 
   correct = verify_benchmark (result);
 
-  // return (!correct);
-  exit(!correct);
-
+  printf("RET=%d\n", !correct);
+  return (!correct);
 }				/* main () */
 
 

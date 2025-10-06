@@ -30,6 +30,7 @@ def parse_options():
     print(ARGUMENTS)
     vars.Add('cc', default=env['CC'])
     vars.Add('cflags', default=env['CCFLAGS'])
+    vars.Add('llcflags', default=[])
     vars.Add('ld', default=env['LINK'])
     vars.Add('ldflags', default=env['LINKFLAGS'])
     vars.Add('user_libs', default=[])
@@ -54,6 +55,7 @@ def populate_build_env(env, vars):
                             'GLOBAL_SCALE_FACTOR' : '${gsf}'})
     env.Append(CPPPATH=['support', config_dir])
     env.Replace(CCFLAGS = "${cflags}")
+    env.Replace(LLCFLAGS = "${llcflags}")
     env.Replace(LINKFLAGS = "${ldflags}")
     env.Replace(CC = "${cc}")
     env.Replace(LINK = "${ld}")
@@ -70,9 +72,10 @@ def build_support_objects(env):
 
 def add_ll_builder(env):
     llc = env['llc']
+    llc_flags = env['llcflags']
     
     ll_builder = Builder(
-        action=f'{llc} -filetype=obj $SOURCE -o $TARGET',
+        action=f'{llc} {llc_flags} -filetype=obj $SOURCE -o $TARGET',
         suffix='.o',
         src_suffix='.ll'
     )
