@@ -85,7 +85,7 @@ def run_benchmark(bench, path, args):
        milliseconds.
     """
 
-    # 
+    # TODO: there has to be a better place to do this than here
     subprocess.run([f'{args.riscv_prefix}-objcopy -O binary {path} {path}.bin'])
 
     try:

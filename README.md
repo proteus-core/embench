@@ -1,3 +1,21 @@
+# Running the embench benchmarks on Proteus
+Requirements: scons (should have been installed when installing the ecosystem):
+`python -m pip install scons` (also available pre-packaged, e.g. `apt-get install scons`)
+
+## Compiling
+To compile the benchmarks for proteus, run:
+`make`
+
+You can optionally specify a different RISC-V prefix, e.g.
+`make RISCV_PREFIX=riscv32-unknown-elf`
+
+## Running the benchmarks
+`python3 benchmark_speed.py --target-module=run_proteus --timeout=5400 --absolute`
+
+You can specify the location of the sim if it is different from the default with `--sim=<path to sim>` and change the RISC-V prefix, e.g. to use riscv32, with: `--riscv-prefix=riscv32-unknown-elf`
+
+---
+Original Embench readme below
 # Embench&#x2122;: Open Benchmarks for Embedded Platforms
 
 This repository contains the Embench&#x2122; free and open source benchmark
