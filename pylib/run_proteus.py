@@ -28,7 +28,20 @@ def get_target_args(remnant):
     """Parse left over arguments"""
     parser = argparse.ArgumentParser(description='Get target specific args')
 
-    # No target arguments
+    parser.add_argument(
+        '--sim',
+        type=str,
+        default=str(pathlib.Path(__file__).resolve().parents[3]/'simulation'/'build'/'sim'),
+        help='Path to the Proteus simulation file',
+    )
+
+    parser.add_argument(
+        '--riscv-prefix',
+        type=str,
+        default='riscv64-unknown-elf',
+        help='Which prefix to use for the RISCV toolchain',
+    )
+
     return parser.parse_args(remnant)
 
 def decode_results(stdout_str, stderr_str):
@@ -52,7 +65,11 @@ def decode_results(stdout_str, stderr_str):
         cycles_elapsed = float(time.group(1))
         print(f"cycles: {cycles_elapsed}")
         # ms_elapsed = cycles_elapsed * (30 * 10e-6); # Critical path of 30 ns
-        ms_elapsed = cycles_elapsed * 30; # Critical path of 30 ns
+        # ms_elapsed = cycles_elapsed * 30; # Critical path of 30 ns
+
+        # this just returns the cycles for now, not ms because there is no one single Proteus CP, is different for each extension and changes on each update to the processor
+        # but is ugly because the function says it returns ms so TODO: clean this up
+        ms_elapsed = cycles_elapsed
         # Return value cannot be zero (will be interpreted as error)
         return max(float(ms_elapsed), 0.001)
 
@@ -68,10 +85,15 @@ def run_benchmark(bench, path, args):
        milliseconds.
     """
 
-    sh = '%s/run_proteus.sh' % pathlib.Path(__file__).resolve().parent
+    # 
+    subprocess.run([f'{args.riscv_prefix}-objcopy -O binary {path} {path}.bin'])
+
     try:
+        # if you want to generate the proteus dump files use:
+        # f'{args.sim} --dump-fst {path}.fst --dump-mem {path}.mem --dump-stores {path}.stores {path}.bin'
+        # (daan included these dumps in the original proteus embench so just leaving this here if he wants to re-enable it)
         res = subprocess.run(
-            ['sh', '-c', sh + ' ' + path],
+            [f'{args.sim} {path}.bin'],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             timeout=gp['timeout']

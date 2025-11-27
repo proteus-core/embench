@@ -9,7 +9,7 @@
 
 #include <stdio.h>
 #include <support.h>
-#include <proteus/performance.h>
+#include "performance.h"
 
 uint64_t begin;
 
