@@ -86,14 +86,14 @@ def run_benchmark(bench, path, args):
     """
 
     # TODO: there has to be a better place to do this than here
-    subprocess.run([f'{args.riscv_prefix}-objcopy -O binary {path} {path}.bin'])
+    subprocess.run([f'{args.riscv_prefix}-objcopy', '-O', 'binary', path, f'{path}.bin'])
 
     try:
         # if you want to generate the proteus dump files use:
-        # f'{args.sim} --dump-fst {path}.fst --dump-mem {path}.mem --dump-stores {path}.stores {path}.bin'
+        # [f'{args.sim}', '--dump-fst', f'{path}.fst', '--dump-mem', f'{path}.mem', '--dump-stores', f'{path}.stores', f'{path}.bin']
         # (daan included these dumps in the original proteus embench so just leaving this here if he wants to re-enable it)
         res = subprocess.run(
-            [f'{args.sim} {path}.bin'],
+            [f'{args.sim}', f'{path}.bin'],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             timeout=gp['timeout']
