@@ -5,7 +5,7 @@ all:
 	scons --config-dir=examples/riscv32/proteusverilator \
 	    cc=$(CC) \
 	    cflags="$(CFLAGS)" \
-	    ldflags="-T $(BSP_DIR)/link.ld -L$(BSP_DIR)" \
+	    ldflags="$(ARCHFLAGS) -T $(BSP_DIR)/link.ld -L$(BSP_DIR)" \
 	    user_libs="-lm -lproteus" \
 	    warmup_heat=0
 
