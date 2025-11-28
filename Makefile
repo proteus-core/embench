@@ -1,6 +1,7 @@
 BSP_DIR = ../../newlib-bsp
 
 all:
+	make -C $(BSP_DIR) $(BSP_LIB_NAME)
 	scons --config-dir=examples/riscv32/proteusverilator \
 	    cc=$(CC) \
 	    cflags="$(CFLAGS)" \
@@ -10,5 +11,6 @@ all:
 
 clean:
 	scons -c
+	make -C $(BSP_DIR) clean
 
 include $(BSP_DIR)/Makefile.include
